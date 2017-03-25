@@ -18,5 +18,5 @@ io.on('connection', socket => {
 
   rooms.rockon(io.to('rockon'), socket)
 
-  rooms.challenge(io.to('challenge'), socket)
+  rooms.challenge(io.to('challenge'), socket, tracks)
 })
