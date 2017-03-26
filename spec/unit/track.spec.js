@@ -100,8 +100,8 @@ describe('Track', function () {
     })
   })
 
-  describe('#calculateScore', function() {
-    it('calculates score correctly based on when a note is played', function() {
+  describe('#calculateScore', function () {
+    it('calculates score correctly based on when a note is played', function () {
       let track = Track({
         notes: [
           { note_id: 1, is_pressed: true, offset: 0 },

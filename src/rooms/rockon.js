@@ -42,10 +42,4 @@ module.exports = (io, socket) => {
       is_pressed: data.is_pressed
     })
   })
-// When the client finishes recording the song, the recording is broadcasted
-  socket.on('rockon:track', data => {
-    io.emit('rockon:track', {
-      track: data.track
-    })
-  })
 }

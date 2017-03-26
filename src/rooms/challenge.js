@@ -88,9 +88,9 @@ module.exports = (io, socket, tracks) => {
       return p2.score - p1.score
     })
     io.emit('challenge:end', {
-      players
+      players: _players
     })
-    players.forEach(player => {
+    _players.forEach(player => {
       io.sockets.connected[player.id].leave('challenge')
     })
   }
