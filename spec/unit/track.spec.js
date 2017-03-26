@@ -57,7 +57,11 @@ describe('Track', function () {
       assert.equal(track.binarySearch(7), 1)
       assert.equal(track.binarySearch(9), 1)
       assert.equal(track.binarySearch(10), 2)
-      assert.equal(track.binarySearch(14), 2)
+      assert.equal(track.binarySearch(11), 3)
+      assert.equal(track.binarySearch(14), 3)
+      assert.equal(track.binarySearch(15), 3)
+      assert.equal(track.binarySearch(16), 3)
+      assert.equal(track.binarySearch(19), 3)
     })
   })
 
@@ -74,11 +78,66 @@ describe('Track', function () {
           { offset: 30 }
         ]
       })
-      const index = 3
-      const range = 5
-      const offset = 15
-      const result = track.notes.slice(2, 5)
+      let index, range, offset, result
+      // from middle of array
+      index = 3
+      range = 5
+      offset = 15
+      result = track.notes.slice(2, 5)
       assert.deepEqual(track.getNotesInRange(index, range, offset), result)
+      // start of array limit
+      index = 0
+      range = 14
+      offset = 0
+      result = track.notes.slice(0, 3)
+      assert.deepEqual(track.getNotesInRange(index, range, offset), result)
+      // end of array limit
+      index = 6
+      range = 5
+      offset = 30
+      result = track.notes.slice(5, 7)
+      assert.deepEqual(track.getNotesInRange(index, range, offset), result)
+    })
+  })
+
+  describe('#calculateScore', function() {
+    it('calculates score correctly based on when a note is played', function() {
+      let track = Track({
+        notes: [
+          { note_id: 1, is_pressed: true, offset: 0 },
+          { note_id: 2, is_pressed: true, offset: 300 },
+          { note_id: 3, is_pressed: true, offset: 500 },
+          { note_id: 1, is_pressed: true, offset: 800 },
+          { note_id: 2, is_pressed: true, offset: 1500 },
+          { note_id: 3, is_pressed: true, offset: 2000 },
+          { note_id: 1, is_pressed: true, offset: 2500 }
+        ]
+      })
+      let noteId, isPressed, offset, result
+      // Perfect note
+      noteId = 1
+      isPressed = true
+      offset = 780
+      result = 60
+      assert.equal(track.calculateScore(noteId, isPressed, offset), result)
+      // Good note
+      noteId = 1
+      isPressed = true
+      offset = 720
+      result = 40
+      assert.equal(track.calculateScore(noteId, isPressed, offset), result)
+      // Fair note
+      noteId = 1
+      isPressed = true
+      offset = 620
+      result = 20
+      assert.equal(track.calculateScore(noteId, isPressed, offset), result)
+      // Wrong note
+      noteId = 0
+      isPressed = true
+      offset = 780
+      result = -10
+      assert.equal(track.calculateScore(noteId, isPressed, offset), result)
     })
   })
 })

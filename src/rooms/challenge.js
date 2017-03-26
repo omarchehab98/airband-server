@@ -1,3 +1,4 @@
+'use strict'
 const ChallengePlayer = require('../models/challengeplayer.js')
 const Track = require('../models/track.js')
 
@@ -62,19 +63,35 @@ module.exports = (io, socket, tracks) => {
 
   function onStart (trackId) {
     io.emit('challenge:start', {
-      trackId
+      track_id: trackId
     })
     track = Track(track)
     startTime = Date.now()
+    const endTime = Date.now() + track.duration
+    setTimeout(onEnd, endTime)
   }
 
   socket.on('challenge:note', data => {
     const offset = Date.now() - startTime
+    const score = track.calculateScore(data.note_id, data.is_pressed, offset)
+    player.score += score
     io.emit('challenge:note', {
       player_id: player.id,
-      score: track.calculateScore(data.note_id, data.is_pressed, offset),
+      score: score,
       note_id: data.note_id,
       is_pressed: data.is_pressed
     })
   })
+
+  function onEnd () {
+    const _players = Object.values(players).sort((p1, p2) => {
+      return p2.score - p1.score
+    })
+    io.emit('challenge:end', {
+      players
+    })
+    players.forEach(player => {
+      io.sockets.connected[player.id].leave('challenge')
+    })
+  }
 }

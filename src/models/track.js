@@ -11,7 +11,29 @@ const Track = function (track) {
      */
     calculateScore: function (noteId, isPressed, offset) {
       const index = _track.binarySearch(offset)
-      const notes = _track.getNotesInRange(index, 100, offset)
+      const notes = _track.getNotesInRange(index, 199, offset)
+        .filter(note => note.note_id === noteId)
+      let score = 0
+      if (notes.length) {
+        notes.forEach(note => {
+          if (note.is_pressed === isPressed) {
+            const deltaOffset = Math.abs(note.offset - offset)
+            if (deltaOffset <= 50) {
+              score += 60
+            } else if (deltaOffset <= 150) {
+              score += 40
+            } else if (deltaOffset <= 199) {
+              score += 20
+            }
+          } else {
+            score -= -10
+          }
+        })
+      } else {
+        score = -10
+      }
+
+      return score
     },
     /**
      * Performs a slightly modified binary search
