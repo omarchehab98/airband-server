@@ -1,0 +1,65 @@
+<div id="home">
+  <button onclick="onRockon()">Rockon</button>
+  <button onclick="onChallenge()">Challenge</button>
+</div>
+<div id="rockon--instrument" style="display: none">
+  <button onclick="onRockonInstrument('piano')">Piano</button>
+  <button onclick="onRockonInstrument('drums')">Drums</button>
+  <button onclick="onRockonInstrument('bongo')">Bongo</button>
+</div>
+<div id="rockon--scene" style="display: none">
+  <button onclick="onRockonNote(1)">1</button>
+  <button onclick="onRockonNote(2)">2</button>
+  <button onclick="onRockonNote(3)">3</button>
+  <button onclick="onRockonNote(4)">4</button>
+  <button onclick="onRockonLeave()">Leave</button>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js
+"></script>
+<script>
+var socket = io('http://192.168.1.191');
+var tracks = []
+socket.on('init', data => {
+  tracks = data.tracks
+})
+
+function onRockon() {
+  document.getElementById('home').style.display = 'none'
+  document.getElementById('rockon--instrument').style.display = 'block'
+}
+
+function onRockonInstrument(instrument) {
+  document.getElementById('rockon--instrument').style.display = 'none'
+  document.getElementById('rockon--scene').style.display = 'block'
+  socket.emit('rockon:join', {
+    instrument
+  })
+}
+
+socket.on('rockon:join', data => {
+  console.log('rockon:join', data)
+})
+
+socket.on('rockon:player_join', data => {
+  console.log('rockon:player_join', data)
+})
+
+function onRockonNote(noteId) {
+  socket.emit('rockon:note', {
+    "note_id": noteId,
+    "is_pressed": true
+  })
+}
+
+socket.on('rockon:note', data => {
+  console.log('rockon:note', data)
+})
+
+function onRockonLeave() {
+  document.getElementById('rockon--scene').style.display = 'none'
+  document.getElementById('home').style.display = 'block'
+  socket.emit('rockon:leave', {
+
+  })
+}
+</script>
