@@ -31,6 +31,9 @@ module.exports = (io, socket) => {
 // When the client selects leave option, unsubscribe him to the rockon room
   socket.on('rockon:leave', data => {
     socket.leave('rockon')
+    io.emit('rockon:leave', {
+      player_id: socket.id
+    })
     delete players[socket.id]
     player = undefined
   })

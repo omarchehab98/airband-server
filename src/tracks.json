@@ -215,7 +215,7 @@
     {"id":1,"offset":124600, "is_pressed":true},
     {"id":0, "offset":125200, "is_pressed":true},
     {"id":3, "offset":125500, "is_pressed":true},
-    {"id":1, "offset":126300,"is_pressed":true},
+    {"id":1, "offset":126300, "is_pressed":true},
     {"id":0, "offset":127000, "is_pressed":true},
     {"id":2, "offset":127600, "is_pressed":true},
     {"id":1, "offset":128000, "is_pressed":true},

@@ -75,6 +75,7 @@ module.exports = (io, socket, tracks) => {
     const offset = Date.now() - startTime
     const score = track.calculateScore(data.note_id, data.is_pressed, offset)
     player.score += score
+    console.log(player.score)
     io.emit('challenge:note', {
       player_id: player.id,
       score: score,

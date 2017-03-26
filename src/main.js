@@ -22,7 +22,6 @@ const rooms = {
 
 const tracks = require('./tracks.json')
 
-console.log('Started')
 io.on('connection', socket => {
   console.log('connection', socket.id)
 
