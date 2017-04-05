@@ -14,6 +14,8 @@
 
 [license-badge]: https://img.shields.io/github/license/omarchehab98/eun-filter.svg
 
+Airband is our hackathon submission for WearHacks Kitchener 2017.
+
 ## Inspiration
 We wanted to bring the pure ecstasy and adrenaline one gets when jamming out on their favourite instrument to a augmented reality environment. The unbeatable pleasure of creating music and art is no longer only exclusive to experienced musicians.
 
