@@ -12,7 +12,7 @@
 
 [license]: ./LICENSE
 
-[license-badge]: https://img.shields.io/github/license/omarchehab98/eun-filter.svg
+[license-badge]: https://img.shields.io/github/license/omarchehab98/airband-server.svg
 
 Airband is our hackathon submission for WearHacks Kitchener 2017.
 
